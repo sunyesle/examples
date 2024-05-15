@@ -1,0 +1,20 @@
+spring:
+  docker:
+    compose:
+      #enabled: true
+      #file: ./docker/compose.yaml # docker compose 파일 경로를 지정 (기본적으로 root path의 compose.yml, docker-compose.yml)
+      skip:
+        in-tests: false # 테스트를 실행할 때 Docker Compose 지원 스킵 여부 (true[기본값], false)
+      lifecycle-management: start-and-stop # 수명주기 제어 (none, start-only, start-and-stop)
+      start:
+        command: up # 도커 시작 커맨드 (up[기본값], start)
+      stop:
+        command: stop # 도커 중지 커맨드 (stop[기본값], down)
+        timeout: 1m
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
