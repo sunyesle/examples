@@ -1,9 +1,6 @@
 package com.sunyesle.spring_boot_concurrency_control;
 
-import com.sunyesle.spring_boot_concurrency_control.stock.OptimisticLockFacade;
-import com.sunyesle.spring_boot_concurrency_control.stock.Stock;
-import com.sunyesle.spring_boot_concurrency_control.stock.StockRepository;
-import com.sunyesle.spring_boot_concurrency_control.stock.StockService;
+import com.sunyesle.spring_boot_concurrency_control.stock.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,9 @@ class StockTest {
 
     @Autowired
     private OptimisticLockFacade optimisticLockFacade;
+
+    @Autowired
+    private DistributeLockFacade distributeLockFacade;
 
     private long STOCK_ID;
 
@@ -88,6 +88,27 @@ class StockTest {
             executorService.submit(() -> {
                 try {
                     optimisticLockFacade.decreaseStock(STOCK_ID, 1);
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+        countDownLatch.await();
+
+        Stock stock = stockRepository.findById(STOCK_ID).orElseThrow();
+        assertThat(stock.getStock()).isZero();
+    }
+
+    @Test
+    void 분산락을_활용한_동시성_제어() throws InterruptedException {
+        int threadCount = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    distributeLockFacade.decreaseStock(STOCK_ID, 1);
                 } finally {
                     countDownLatch.countDown();
                 }
