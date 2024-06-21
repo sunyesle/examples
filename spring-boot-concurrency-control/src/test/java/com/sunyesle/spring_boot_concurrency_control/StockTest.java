@@ -26,6 +26,9 @@ class StockTest {
     @Autowired
     private DistributeLockFacade distributeLockFacade;
 
+    @Autowired
+    private SynchronizedFacade synchronizedFacade;
+
     private long STOCK_ID;
 
     @BeforeEach
@@ -109,6 +112,27 @@ class StockTest {
             executorService.submit(() -> {
                 try {
                     distributeLockFacade.decreaseStock(STOCK_ID, 1);
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+        countDownLatch.await();
+
+        Stock stock = stockRepository.findById(STOCK_ID).orElseThrow();
+        assertThat(stock.getStock()).isZero();
+    }
+
+    @Test
+    void synchronized를_활용한_동시성_제어() throws InterruptedException {
+        int threadCount = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    synchronizedFacade.decreaseStock(STOCK_ID, 1);
                 } finally {
                     countDownLatch.countDown();
                 }
