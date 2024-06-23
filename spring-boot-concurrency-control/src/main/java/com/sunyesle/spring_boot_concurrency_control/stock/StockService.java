@@ -27,4 +27,10 @@ public class StockService {
         Stock stock = stockRepository.findByIdWithOptimisticLock(stockId);
         stock.decrease(quantity);
     }
+
+    @DistributedLock(key = "'stock-' + #stockId")
+    public void decreaseWithDistributedLock(long stockId, int quantity) {
+        Stock stock = stockRepository.findById(stockId).orElseThrow();
+        stock.decrease(quantity);
+    }
 }

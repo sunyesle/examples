@@ -143,4 +143,25 @@ class StockTest {
         Stock stock = stockRepository.findById(STOCK_ID).orElseThrow();
         assertThat(stock.getStock()).isZero();
     }
+
+    @Test
+    void 분산락을_활용한_동시성_제어_AOP() throws InterruptedException {
+        int threadCount = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(32);
+        CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    stockService.decreaseWithDistributedLock(STOCK_ID, 1);
+                } finally {
+                    countDownLatch.countDown();
+                }
+            });
+        }
+        countDownLatch.await();
+
+        Stock stock = stockRepository.findById(STOCK_ID).orElseThrow();
+        assertThat(stock.getStock()).isZero();
+    }
 }
