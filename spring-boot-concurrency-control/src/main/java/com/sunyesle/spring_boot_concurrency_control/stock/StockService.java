@@ -1,5 +1,6 @@
 package com.sunyesle.spring_boot_concurrency_control.stock;
 
+import com.sunyesle.spring_boot_concurrency_control.redission.DistributedLock;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

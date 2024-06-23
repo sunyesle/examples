@@ -1,4 +1,4 @@
-package com.sunyesle.spring_boot_concurrency_control.stock;
+package com.sunyesle.spring_boot_concurrency_control.redission;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

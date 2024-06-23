@@ -24,7 +24,7 @@ class StockTest {
     private OptimisticLockFacade optimisticLockFacade;
 
     @Autowired
-    private DistributeLockFacade distributeLockFacade;
+    private DistributedLockFacade distributeLockFacade;
 
     @Autowired
     private SynchronizedFacade synchronizedFacade;

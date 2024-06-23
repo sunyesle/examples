@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
-public class DistributeLockFacade {
+public class DistributedLockFacade {
     private final StockService stockService;
     private final RedissonClient redissonClient;
 
