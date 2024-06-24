@@ -21,7 +21,6 @@ public class DistributedLockFacade {
             boolean available = rLock.tryLock(5000, 2000, TimeUnit.MILLISECONDS);
             if (!available) {
                 //락 획득 실패
-                System.out.println("락 획득 실패");
                 throw new RuntimeException("LOCK_ACQUISITION_FAILED");
             }
 

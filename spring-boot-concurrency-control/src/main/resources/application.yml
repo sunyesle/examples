@@ -19,7 +19,7 @@ spring:
     defer-datasource-initialization: true
   data:
     redis:
-      host: localhost
+      host: # IP address
       port: 6379
   docker:
     compose:

@@ -34,7 +34,7 @@ public class DistributedLockAspect {
 
         String key = REDISSION_LOCK_PREFIX + CustomSpringELParser.getDynamicValue(signature.getParameterNames(), joinPoint.getArgs(), distributedLock.key());
         RLock rLock = redissonClient.getLock(key);
-        System.out.println(key);
+
         try {
             boolean available = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
             if (!available) {
