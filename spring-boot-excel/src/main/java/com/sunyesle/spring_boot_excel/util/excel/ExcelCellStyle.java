@@ -1,72 +1,55 @@
 package com.sunyesle.spring_boot_excel.util.excel;
 
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.DefaultIndexedColorMap;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ExcelCellStyle {
+    private final Map<Style, CellStyle> cacheMap = new HashMap<>();
     private final Workbook workbook;
-
-    private CellStyle headerCellStyle;
-    private CellStyle dataCellStyle;
-    private CellStyle dateDataCellStyle;
 
     public ExcelCellStyle(Workbook workbook) {
         this.workbook = workbook;
     }
 
-    public CellStyle getHeaderCellStyle() {
-        if (headerCellStyle == null) {
-            headerCellStyle = createHeaderCellStyle();
+    public CellStyle getCellStyle(Style style) {
+        if (cacheMap.containsKey(style)) {
+            return cacheMap.get(style);
         }
-        return headerCellStyle;
-    }
 
-    private CellStyle createHeaderCellStyle() {
-        CellStyle cellStyle = createCellStyle(IndexedColors.GREY_25_PERCENT, HorizontalAlignment.CENTER);
-
-        Font headerFont = workbook.createFont();
-        headerFont.setBold(true);
-        cellStyle.setFont(headerFont);
-
-        return cellStyle;
-    }
-
-    public CellStyle getDataCellStyle() {
-        if (dataCellStyle == null) {
-            dataCellStyle = createDataCellStyle();
-        }
-        return dataCellStyle;
-    }
-
-    private CellStyle createDataCellStyle() {
-        return createCellStyle(IndexedColors.WHITE, HorizontalAlignment.GENERAL);
-    }
-
-    public CellStyle getDateDataCellStyle() {
-        if (dateDataCellStyle == null) {
-            dateDataCellStyle = createDateDataCellStyle();
-        }
-        return dateDataCellStyle;
-    }
-
-    private CellStyle createDateDataCellStyle() {
-        CellStyle cellStyle = createCellStyle(IndexedColors.WHITE, HorizontalAlignment.GENERAL);
-        cellStyle.setDataFormat(workbook.createDataFormat().getFormat("yyyy-mm-dd h:mm"));
-        return cellStyle;
-    }
-
-    private CellStyle createCellStyle(IndexedColors color, HorizontalAlignment align) {
         CellStyle cellStyle = workbook.createCellStyle();
 
-        cellStyle.setFillForegroundColor(color.index);
+        // 배경색
+        String hexColor = style.getBackgroundColor().replace("#", "0x");
+        cellStyle.setFillForegroundColor(new XSSFColor(java.awt.Color.decode(hexColor), new DefaultIndexedColorMap()));
         cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        cellStyle.setAlignment(align);
+        // 수평정렬
+        cellStyle.setAlignment(style.getHorizontalAlignment());
 
+        // 수직정렬
+        cellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        // 테두리
         cellStyle.setBorderLeft(BorderStyle.THIN);
         cellStyle.setBorderTop(BorderStyle.THIN);
         cellStyle.setBorderRight(BorderStyle.THIN);
         cellStyle.setBorderBottom(BorderStyle.THIN);
+
+        // 폰트
+        Font font = workbook.createFont();
+        font.setBold(style.isBold());
+        cellStyle.setFont(font);
+
+        // 표시형식
+        DataFormat dataformat = workbook.createDataFormat();
+        cellStyle.setDataFormat(dataformat.getFormat(style.getDataFormat()));
+
+        cacheMap.put(style, cellStyle);
+
         return cellStyle;
     }
 }

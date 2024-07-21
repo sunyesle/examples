@@ -49,7 +49,7 @@ public class ExcelEditor<T> implements AutoCloseable {
             sheet.setColumnWidth(columnIndex, excelMetaData.getWidthMap().get(dataFieldName));
 
             Cell cell = row.createCell(columnIndex);
-            cell.setCellStyle(excelCellStyle.getHeaderCellStyle());
+            cell.setCellStyle(excelCellStyle.getCellStyle(excelMetaData.getHeaderStyleMap().get(dataFieldName)));
             cell.setCellValue(excelMetaData.getHeaderNamesMap().get(dataFieldName));
 
             columnIndex++;
@@ -66,11 +66,7 @@ public class ExcelEditor<T> implements AutoCloseable {
                 field.setAccessible(true);
                 Object cellValue = field.get(data);
 
-                if (cellValue instanceof Date) {
-                    cell.setCellStyle(excelCellStyle.getDateDataCellStyle());
-                } else {
-                    cell.setCellStyle(excelCellStyle.getDataCellStyle());
-                }
+                cell.setCellStyle(excelCellStyle.getCellStyle(excelMetaData.getDataStyleMap().get(dataFieldName)));
 
                 renderCellValue(cell, cellValue);
             } catch (NoSuchFieldException | IllegalAccessException e) {

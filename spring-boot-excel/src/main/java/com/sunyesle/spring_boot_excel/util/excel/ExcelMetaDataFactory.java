@@ -16,6 +16,8 @@ public class ExcelMetaDataFactory {
 
         Map<String, String> headerNamesMap = new LinkedHashMap<>();
         Map<String, Integer> widthMap = new LinkedHashMap<>();
+        Map<String, Style> headerStyleMap = new LinkedHashMap<>();
+        Map<String, Style> dataStyleMap = new LinkedHashMap<>();
         List<String> fieldNames = new ArrayList<>();
 
         for (Field field : type.getDeclaredFields()) {
@@ -23,6 +25,8 @@ public class ExcelMetaDataFactory {
                 ExcelColumn columnAnnotation = field.getAnnotation(ExcelColumn.class);
                 headerNamesMap.put(field.getName(), columnAnnotation.headerName());
                 widthMap.put(field.getName(), columnAnnotation.width());
+                headerStyleMap.put(field.getName(), columnAnnotation.headerStyle().getStyle());
+                dataStyleMap.put(field.getName(), columnAnnotation.dataStyle().getStyle());
 
                 fieldNames.add(field.getName());
             }
@@ -32,7 +36,7 @@ public class ExcelMetaDataFactory {
             throw new NoExcelColumnAnnotationsException(String.format("Class %s has not @ExcelColumn at all", type));
         }
 
-        ExcelMetaData result = new ExcelMetaData(headerNamesMap, widthMap, fieldNames);
+        ExcelMetaData result = new ExcelMetaData(headerNamesMap, widthMap, headerStyleMap, dataStyleMap, fieldNames);
         cache.put(type, result);
         return result;
     }

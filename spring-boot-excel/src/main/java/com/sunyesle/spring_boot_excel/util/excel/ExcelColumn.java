@@ -10,6 +10,9 @@ import java.lang.annotation.Target;
 public @interface ExcelColumn {
     String headerName() default "";
 
+    StyleType headerStyle() default StyleType.HEADER_STYLE;
+
+    StyleType dataStyle() default StyleType.DATA_STYLE;
+
     int width() default 4000;
 }
-
