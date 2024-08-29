@@ -1,9 +1,6 @@
 package com.sunyesle.spring_boot_jpa;
 
-import com.sunyesle.spring_boot_jpa.join2.Team;
-import com.sunyesle.spring_boot_jpa.join2.TeamMember;
-import com.sunyesle.spring_boot_jpa.join2.TeamRepository;
-import com.sunyesle.spring_boot_jpa.join2.TeamService;
+import com.sunyesle.spring_boot_jpa.join2.*;
 import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +18,9 @@ class TeamMemberRepositoryTest {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    TeamMemberService teamMemberService;
 
     @BeforeEach
     void setUp() {
@@ -53,7 +53,7 @@ class TeamMemberRepositoryTest {
             on t1_0.id=m1_0.team_id
     */
     @Test
-    void joinTest(){
+    void TeamJoinTest(){
         List<Team> memberUsingJoin = teamService.findAllWithMemberUsingJoin();
 
         assertThatThrownBy(() -> System.out.println(memberUsingJoin))
@@ -76,9 +76,31 @@ class TeamMemberRepositoryTest {
         on t1_0.id=m1_0.team_id
     */
     @Test
-    void fetchJoinTest(){
+    void TeamFetchJoinTest(){
         List<Team> memberUsingJoin = teamService.findAllWithMemberUsingFetchJoin();
 
         System.out.println(memberUsingJoin);
+    }
+
+    /*
+
+
+    select
+        tm1_0.id,
+        tm1_0.name,
+        tm1_0.team_id,
+        t1_0.id,
+        t1_0.name
+    from
+        team_member tm1_0
+    join
+        team t1_0
+            on t1_0.id=tm1_0.team_id
+     */
+    @Test
+    void TeamMemberJoinTest(){
+        List<TeamMember> teamMembers = teamMemberService.findAllWithTeamUsingJoin();
+
+        teamMembers.forEach((e) -> System.out.println(e.getTeam().getName()));
     }
 }
