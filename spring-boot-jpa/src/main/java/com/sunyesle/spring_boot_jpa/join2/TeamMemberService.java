@@ -15,4 +15,12 @@ public class TeamMemberService {
     public List<TeamMember> findAllWithTeamUsingJoin() {
         return teamMemberRepository.findAllWithTeamUsingJoin();
     }
+
+    public List<TeamMember> findAllWithTeamUsingJoinSelect() {
+        return teamMemberRepository.findAllWithTeamUsingJoinSelect();
+    }
+
+    public List<TeamMember> findAllWithTeamUsingFetchJoin() {
+        return teamMemberRepository.findAllWithTeamUsingFetchJoin();
+    }
 }
