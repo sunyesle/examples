@@ -1,15 +1,10 @@
 package com.sunyesle.spring_boot_jpa;
 
 import com.sunyesle.spring_boot_jpa.join2.*;
-import org.hibernate.LazyInitializationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 class TeamMemberRepositoryTest {
@@ -64,13 +59,20 @@ class TeamMemberRepositoryTest {
     join
         team_member m1_0
             on t1_0.id=m1_0.team_id
+
+    추가 쿼리 발생
+    select
+        m1_0.team_id,
+        m1_0.id,
+        m1_0.name
+    from
+        team_member m1_0
+    where
+        m1_0.team_id=3
      */
     @Test
     void TeamJoinTest() {
-        List<Team> memberUsingJoin = teamService.findAllWithMemberUsingJoin();
-
-        assertThatThrownBy(() -> System.out.println(memberUsingJoin))
-                .isInstanceOf(LazyInitializationException.class);
+        teamService.findAllWithMemberUsingJoin();// N+1
     }
 
     /*
@@ -90,9 +92,7 @@ class TeamMemberRepositoryTest {
      */
     @Test
     void TeamFetchJoinTest() {
-        List<Team> memberUsingJoin = teamService.findAllWithMemberUsingFetchJoin();
-
-        System.out.println(memberUsingJoin);
+        teamService.findAllWithMemberUsingFetchJoin();
     }
 
     // ===========================
@@ -109,13 +109,19 @@ class TeamMemberRepositoryTest {
     join
         team t1_0
             on t1_0.id=tm1_0.team_id
+
+    추가 쿼리 발생
+    select
+        t1_0.id,
+        t1_0.name
+    from
+        team t1_0
+    where
+        t1_0.id=9
      */
     @Test
     void TeamMemberJoinTest() {
-        List<TeamMember> teamMembers = teamMemberService.findAllWithTeamUsingJoin();
-
-        assertThatThrownBy(() -> teamMembers.forEach(e -> System.out.println(e.getTeam().getName())))
-                .isInstanceOf(LazyInitializationException.class);
+        teamMemberService.findAllWithTeamUsingJoin();
     }
 
     /*
@@ -133,9 +139,7 @@ class TeamMemberRepositoryTest {
      */
     @Test
     void TeamMemberJoinSelectTest() {
-        List<TeamMember> teamMembers = teamMemberService.findAllWithTeamUsingJoinSelect();
-
-        teamMembers.forEach(e -> System.out.println(e.getTeam().getName()));
+        teamMemberService.findAllWithTeamUsingJoinSelect();
     }
 
     /*
@@ -152,8 +156,6 @@ class TeamMemberRepositoryTest {
      */
     @Test
     void TeamMemberFetchJoinTest() {
-        List<TeamMember> teamMembers = teamMemberService.findAllWithTeamUsingFetchJoin();
-
-        teamMembers.forEach(e -> System.out.println(e.getTeam().getName()));
+        teamMemberService.findAllWithTeamUsingFetchJoin();
     }
 }

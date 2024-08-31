@@ -13,14 +13,20 @@ public class TeamMemberService {
     private final TeamMemberRepository teamMemberRepository;
 
     public List<TeamMember> findAllWithTeamUsingJoin() {
-        return teamMemberRepository.findAllWithTeamUsingJoin();
+        List<TeamMember> members = teamMemberRepository.findAllWithTeamUsingJoin();
+        members.forEach(e -> System.out.println(e.getTeam().getName()));
+        return members;
     }
 
     public List<TeamMember> findAllWithTeamUsingJoinSelect() {
-        return teamMemberRepository.findAllWithTeamUsingJoinSelect();
+        List<TeamMember> members = teamMemberRepository.findAllWithTeamUsingJoinSelect();
+        members.forEach(e -> System.out.println(e.getTeam().getName()));
+        return members;
     }
 
     public List<TeamMember> findAllWithTeamUsingFetchJoin() {
-        return teamMemberRepository.findAllWithTeamUsingFetchJoin();
+        List<TeamMember> members = teamMemberRepository.findAllWithTeamUsingFetchJoin();
+        members.forEach(e -> System.out.println(e.getTeam().getName()));
+        return members;
     }
 }
