@@ -34,12 +34,12 @@ class OrphanRemovalTest {
     void orphanRemovalTrue_removeParent_test() {
         // given
         Child2 child1 = new Child2();
-        Child2 child = new Child2();
+        Child2 child2 = new Child2();
 
         Parent2 parent = new Parent2();
 
         parent.addChild(child1);
-        parent.addChild(child);
+        parent.addChild(child2);
 
         parentRepository.save(parent);
 
@@ -65,12 +65,12 @@ class OrphanRemovalTest {
     void orphanRemovalTrue_removeChild_test() {
         // given
         Child2 child1 = new Child2();
-        Child2 child = new Child2();
+        Child2 child2 = new Child2();
 
         Parent2 parent = new Parent2();
 
         parent.addChild(child1);
-        parent.addChild(child);
+        parent.addChild(child2);
 
         parentRepository.save(parent);
 
@@ -78,7 +78,7 @@ class OrphanRemovalTest {
 
         // when
         parent.removeChild(child1);
-        parent.removeChild(child);
+        parent.removeChild(child2);
 
         // then
         List<Parent2> parents = parentRepository.findAll();

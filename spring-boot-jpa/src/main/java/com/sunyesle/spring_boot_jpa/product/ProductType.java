@@ -1,7 +1,5 @@
 package com.sunyesle.spring_boot_jpa.product;
 
-import jakarta.persistence.Converter;
-
 public enum ProductType implements CodedEnum<Integer> {
     FOOD(100),
     DRINK(200),

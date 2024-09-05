@@ -89,3 +89,4 @@ class PostRepositoryTest {
         System.out.println("findAllFetchJoin size(): " + posts.size());
     }
 }
+ 

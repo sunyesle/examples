@@ -33,12 +33,12 @@ class CascadeTypeRemoveTest {
     @Test
     void cascadeTypeRemove_removeParent_test() {
         // given
-        Child child = new Child();
+        Child child1 = new Child();
         Child child2 = new Child();
 
         Parent parent = new Parent();
 
-        parent.addChild(child);
+        parent.addChild(child1);
         parent.addChild(child2);
 
         parentRepository.save(parent);
@@ -64,20 +64,20 @@ class CascadeTypeRemoveTest {
     @Test
     void cascadeTypeRemove_removeChild_test() {
         // given
-        Child child = new Child();
+        Child child1 = new Child();
         Child child2 = new Child();
 
         Parent parent = new Parent();
 
-        parent.addChild(child);
+        parent.addChild(child1);
         parent.addChild(child2);
 
-        parentRepository.saveAndFlush(parent);
+        parentRepository.save(parent);
 
         entityManager.flush();
 
         // when
-        parent.removeChild(child);
+        parent.removeChild(child1);
         parent.removeChild(child2);
 
         // then
