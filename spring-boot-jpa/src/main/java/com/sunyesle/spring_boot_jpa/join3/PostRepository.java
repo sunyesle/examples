@@ -12,6 +12,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @EntityGraph(attributePaths = "comments")
     List<Post> findAll();
 
+    @Query("SELECT p FROM Post p LEFT JOIN FETCH p.comments")
+    List<Post> findAllLeftJoinFetch();
+
     @Query("SELECT p FROM Post p JOIN FETCH p.comments")
-    List<Post> findAllFetchJoin();
+    List<Post> findAllJoinFetch();
 }
