@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CascadeTypeRemoveTest {
 
     @Autowired
-    private TestEntityManager entityManager;
+    TestEntityManager entityManager;
 
     @Autowired
     ParentRepository parentRepository;

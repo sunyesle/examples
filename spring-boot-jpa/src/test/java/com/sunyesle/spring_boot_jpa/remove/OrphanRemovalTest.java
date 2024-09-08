@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OrphanRemovalTest {
 
     @Autowired
-    private TestEntityManager entityManager;
+    TestEntityManager entityManager;
 
     @Autowired
     Parent2Repository parentRepository;

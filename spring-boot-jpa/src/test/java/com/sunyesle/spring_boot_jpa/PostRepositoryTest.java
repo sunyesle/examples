@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PostRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
+    TestEntityManager entityManager;
 
     @Autowired
     PostRepository postRepository;
@@ -43,6 +43,24 @@ class PostRepositoryTest {
         entityManager.flush();
     }
 
+    /*
+    select
+        p1_0.id,
+        c1_0.post_id,
+        c1_0.id,
+        c1_0.content,
+        p1_0.content,
+        p1_0.title
+    from
+        post p1_0
+    left join
+        comment c1_0
+            on p1_0.id=c1_0.post_id
+
+    Post(id=1, title=Post1, content=..., comments=[Comment(id=1, content=Post1 Comment1), Comment(id=2, content=Post2 Comment1)])
+    Post(id=2, title=Post2, content=..., comments=[Comment(id=3, content=Post2 Comment2)])
+    Post(id=3, title=Post3, content=..., comments=[])
+     */
     @Test
     void findAllEntityGraphTest() {
         // when
@@ -53,6 +71,24 @@ class PostRepositoryTest {
         assertThat(posts).hasSize(3);
     }
 
+    /*
+    select
+        p1_0.id,
+        c1_0.post_id,
+        c1_0.id,
+        c1_0.content,
+        p1_0.content,
+        p1_0.title
+    from
+        post p1_0
+    left join
+        comment c1_0
+            on p1_0.id=c1_0.post_id
+
+    Post(id=1, title=Post1, content=..., comments=[Comment(id=1, content=Post1 Comment1), Comment(id=2, content=Post1 Comment2)])
+    Post(id=2, title=Post2, content=..., comments=[Comment(id=3, content=Post2 Comment2)])
+    Post(id=3, title=Post3, content=..., comments=[])
+     */
     @Test
     void findAllLeftJoinFetchTest() {
         // when
@@ -63,6 +99,23 @@ class PostRepositoryTest {
         assertThat(posts).hasSize(3);
     }
 
+    /*
+    select
+        p1_0.id,
+        c1_0.post_id,
+        c1_0.id,
+        c1_0.content,
+        p1_0.content,
+        p1_0.title
+    from
+        post p1_0
+    join
+        comment c1_0
+            on p1_0.id=c1_0.post_id
+
+    Post(id=1, title=Post1, content=..., comments=[Comment(id=1, content=Post1 Comment1), Comment(id=2, content=Post1 Comment2)])
+    Post(id=2, title=Post2, content=..., comments=[Comment(id=3, content=Post2 Comment2)])
+     */
     @Test
     void findAllJoinFetchTest() {
         // when
