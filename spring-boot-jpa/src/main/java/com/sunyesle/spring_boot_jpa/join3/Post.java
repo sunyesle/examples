@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +23,15 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
-    public Post() {
+    private LocalDateTime createdAt;
+
+    protected Post() {
     }
 
-    public Post(String title, String content) {
+    public Post(String title, String content, LocalDateTime createdAt) {
         this.title = title;
         this.content = content;
+        this.createdAt = createdAt;
     }
 
     public void addComment(Comment comment) {

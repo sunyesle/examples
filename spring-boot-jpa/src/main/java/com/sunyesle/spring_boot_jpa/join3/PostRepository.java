@@ -17,4 +17,21 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p JOIN FETCH p.comments")
     List<Post> findAllJoinFetch();
+
+    @Query("""
+            SELECT p
+            FROM Post p
+            LEFT JOIN FETCH p.comments
+            WHERE p.id IN (
+                SELECT id
+                FROM (
+                    SELECT id AS id,
+                        ROW_NUMBER() OVER (ORDER BY createdAt ASC) AS ranking
+                    FROM Post
+                    WHERE title LIKE :title
+                ) pr
+                WHERE ranking BETWEEN (:page - 1) * :pageSize + 1 AND :page * :pageSize
+            )
+            """)
+    List<Post> findByTitleLike(String title, int page, int pageSize);
 }
