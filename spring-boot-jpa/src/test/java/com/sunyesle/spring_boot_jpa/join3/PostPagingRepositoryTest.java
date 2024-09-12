@@ -59,4 +59,15 @@ public class PostPagingRepositoryTest {
         assertThat(postPage2).hasSize(5);
         assertThat(postPage3).hasSize(2);
     }
+
+    @Test
+    void DtoMappingTest() {
+        List<PostDTO> postPage1 = postRepository.findPostDtoByTitle("%", 1, 5);
+        List<PostDTO> postPage2 = postRepository.findPostDtoByTitle("%", 2, 5);
+        List<PostDTO> postPage3 = postRepository.findPostDtoByTitle("%", 3, 5);
+
+        System.out.println(postPage1);
+        System.out.println(postPage2);
+        System.out.println(postPage3);
+    }
 }
