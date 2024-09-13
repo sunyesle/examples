@@ -124,4 +124,24 @@ class PostRepositoryTest {
         posts.forEach(p -> System.out.println(p.toString()));
         assertThat(posts).hasSize(2);
     }
+
+    @Test
+    void queryMethodWithEntityGraphTest() {
+        // when
+        List<Post> posts = postRepository.findByTitle("Post1");
+
+        // then
+        posts.forEach(p -> System.out.println(p.toString()));
+        assertThat(posts).hasSize(1);
+    }
+
+    @Test
+    void jpqlWithEntityGraphTest() {
+        // when
+        List<Post> posts = postRepository.findByTitleJpql("Post1");
+
+        // then
+        posts.forEach(p -> System.out.println(p.toString()));
+        assertThat(posts).hasSize(1);
+    }
 }
