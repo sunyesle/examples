@@ -12,6 +12,9 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Component
 @RequiredArgsConstructor
 public class SimpleJobSchedule {
@@ -20,9 +23,13 @@ public class SimpleJobSchedule {
 
     @Scheduled(cron = "0/10 * * * * ?")
     public void runSimpleJob() throws NoSuchJobException, JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         jobLauncher.run(
                 jobRegistry.getJob("simpleJob"),
-                new JobParametersBuilder().toJobParameters()
+                new JobParametersBuilder()
+                        .addString("date", formatter.format(new Date()))
+                        .addString("count", "3")
+                        .toJobParameters()
         );
     }
 }
