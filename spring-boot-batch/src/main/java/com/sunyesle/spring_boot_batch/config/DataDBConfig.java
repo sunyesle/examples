@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = "com.sunyesle.spring_boot_batch.entity",
+        basePackages = "com.sunyesle.spring_boot_batch",
         entityManagerFactoryRef = "dataEntityManager",
         transactionManagerRef = "dataTransactionManager"
 )
@@ -32,7 +32,7 @@ public class DataDBConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.sunyesle.spring_boot_batch.entity");
+        em.setPackagesToScan("com.sunyesle.spring_boot_batch");
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         HashMap<String, Object> properties = new HashMap<>();
