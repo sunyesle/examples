@@ -1,5 +1,6 @@
 package com.sunyesle.spring_boot_batch.config;
 
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,7 @@ public class DataDBConfig {
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.physical_naming_strategy", CamelCaseToUnderscoresNamingStrategy.class.getName());
         em.setJpaPropertyMap(properties);
 
         return em;
