@@ -26,10 +26,4 @@ public class MetaDBConfig {
     public PlatformTransactionManager metaTransactionManager() {
         return new DataSourceTransactionManager(metaDataSource());
     }
-
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.data-db")
-    public DataSource dataDataSource() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
-    }
 }
