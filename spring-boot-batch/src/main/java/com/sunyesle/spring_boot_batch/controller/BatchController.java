@@ -33,4 +33,14 @@ public class BatchController {
         return "ok";
     }
 
+    @GetMapping("/popular-post-job")
+    public String popularPostJobApi(@RequestParam String date) throws NoSuchJobException, JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("date", date)
+                .toJobParameters();
+
+        jobLauncher.run(jobRegistry.getJob("popularPostJob"), jobParameters);
+
+        return "ok";
+    }
 }
