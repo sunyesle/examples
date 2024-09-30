@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
-public class PopularPostConfig {
+public class PopularPostJobConfig {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     private final PostRepository postRepository;
@@ -36,11 +36,11 @@ public class PopularPostConfig {
 
     @Bean
     public Step popularPostStep() {
-        return new StepBuilder("popularStep", jobRepository)
+        return new StepBuilder("popularPostStep", jobRepository)
                 .<Post, Post>chunk(10, transactionManager)
                 .reader(popularPostReader())
                 .processor(popularPostProcessor())
-                .writer(postWriter())
+                .writer(popularPostWriter())
                 .build();
     }
 
@@ -65,7 +65,7 @@ public class PopularPostConfig {
     }
 
     @Bean
-    public ItemWriter<Post> postWriter() {
+    public ItemWriter<Post> popularPostWriter() {
         return new RepositoryItemWriterBuilder<Post>()
                 .repository(postRepository)
                 .methodName("save")
