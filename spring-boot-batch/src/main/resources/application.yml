@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: test
   application:
     name: spring-boot-batch
   batch:
@@ -6,6 +8,11 @@ spring:
       enabled: false
     jdbc:
       initialize-schema: always
+---
+spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
     meta-db:
       pool-name: meta-db
@@ -19,16 +26,32 @@ spring:
       jdbc-url: jdbc:mysql://localhost:13306/data-db
       username: test
       password: test1!
-#  datasource:
-#    driver-class-name: org.h2.Driver
-#    url: jdbc:h2:mem:test
-#    username: sa
-#    password:
+  docker:
+    compose:
+      skip:
+        in-tests: false # 테스트를 실행할 때 Docker Compose 지원 스킵 여부 (true[기본값], false)
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    meta-db:
+      pool-name: meta-db
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:meta-db
+      username: test
+      password: test1!
+    data-db:
+      pool-name: data-db
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:data-db
+      username: test
+      password: test1!
   h2:
     console:
       enabled: true
       path: /h2-console
   docker:
     compose:
-      skip:
-        in-tests: false # 테스트를 실행할 때 Docker Compose 지원 스킵 여부 (true[기본값], false)
+      enabled: false
