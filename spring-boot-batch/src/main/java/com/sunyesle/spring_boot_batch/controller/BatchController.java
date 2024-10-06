@@ -54,4 +54,15 @@ public class BatchController {
 
         return "ok";
     }
+
+    @GetMapping("/jpa-paging-job")
+    public String jpaPagingJob(@RequestParam String date) throws NoSuchJobException, JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addString("date", date)
+                .toJobParameters();
+
+        jobLauncher.run(jobRegistry.getJob("jpaPagingJob"), jobParameters);
+
+        return "ok";
+    }
 }
