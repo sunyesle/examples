@@ -24,41 +24,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class PopularPostJdbcJobConfig {
+public class JdbcPagingJobConfig {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     private final DataSource dataSource;
 
-    public PopularPostJdbcJobConfig(JobRepository jobRepository, PlatformTransactionManager transactionManager, @Qualifier("dataSource") DataSource dataSource) {
+    public JdbcPagingJobConfig(JobRepository jobRepository,
+                               @Qualifier("dataTransactionManager") PlatformTransactionManager transactionManager,
+                               @Qualifier("dataSource") DataSource dataSource) {
         this.jobRepository = jobRepository;
         this.transactionManager = transactionManager;
         this.dataSource = dataSource;
     }
 
     @Bean
-    public Job popularPostJdbcJob() {
-        return new JobBuilder("popularPostJdbcJob", jobRepository)
-                .start(popularPostJdbcStep())
+    public Job jdbcPagingJob() {
+        return new JobBuilder("jdbcPagingJob", jobRepository)
+                .start(jdbcPagingStep())
                 .build();
     }
 
     @Bean
-    public Step popularPostJdbcStep() {
-        return new StepBuilder("popularPostJdbcStep", jobRepository)
+    public Step jdbcPagingStep() {
+        return new StepBuilder("jdbcPagingStep", jobRepository)
                 .<Post, Post>chunk(10, transactionManager)
-                .reader(popularPostJdbcReader())
-                .processor(popularPostJdbcProcessor())
-                .writer(popularPostJdbcWriter())
+                .reader(jdbcPagingReader())
+                .processor(jdbcPagingProcessor())
+                .writer(jdbcPagingWriter())
                 .build();
     }
 
     @Bean
-    public JdbcPagingItemReader<Post> popularPostJdbcReader() {
+    public JdbcPagingItemReader<Post> jdbcPagingReader() {
         Map<String, Object> parameterValues = new HashMap<>();
         parameterValues.put("viewCount", 1000);
 
         return new JdbcPagingItemReaderBuilder<Post>()
-                .name("popularPostJdbcReader")
+                .name("jdbcPagingReader")
                 .dataSource(dataSource)
                 .selectClause("SELECT id, title, view_count, is_popular")
                 .fromClause("FROM post")
@@ -71,7 +73,7 @@ public class PopularPostJdbcJobConfig {
     }
 
     @Bean
-    public ItemProcessor<Post, Post> popularPostJdbcProcessor() {
+    public ItemProcessor<Post, Post> jdbcPagingProcessor() {
         return post -> {
             post.setIsPopular(true);
             return post;
@@ -79,11 +81,10 @@ public class PopularPostJdbcJobConfig {
     }
 
     @Bean
-    public ItemWriter<Post> popularPostJdbcWriter() {
-        String sql = "UPDATE post SET is_popular = :isPopular WHERE id = :id";
+    public ItemWriter<Post> jdbcPagingWriter() {
         return new JdbcBatchItemWriterBuilder<Post>()
                 .dataSource(dataSource)
-                .sql(sql)
+                .sql("UPDATE post SET is_popular = :isPopular WHERE id = :id")
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
                 .assertUpdates(true)
                 .build();
