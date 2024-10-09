@@ -15,6 +15,7 @@ import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
@@ -23,13 +24,21 @@ import org.springframework.transaction.PlatformTransactionManager;
 import java.util.Map;
 
 @Configuration
-@RequiredArgsConstructor
 public class MyJobConfig {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
-
     private final BeforeRepository beforeRepository;
     private final AfterRepository afterRepository;
+
+    public MyJobConfig(JobRepository jobRepository,
+                       @Qualifier("dataTransactionManager") PlatformTransactionManager transactionManager,
+                       BeforeRepository beforeRepository,
+                       AfterRepository afterRepository) {
+        this.jobRepository = jobRepository;
+        this.transactionManager = transactionManager;
+        this.beforeRepository = beforeRepository;
+        this.afterRepository = afterRepository;
+    }
 
     @Bean
     public Job myJob() {

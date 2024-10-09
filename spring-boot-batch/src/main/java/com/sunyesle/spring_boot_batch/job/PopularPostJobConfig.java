@@ -13,6 +13,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.data.RepositoryItemReader;
 import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
 import org.springframework.batch.item.data.builder.RepositoryItemWriterBuilder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
@@ -21,11 +22,18 @@ import org.springframework.transaction.PlatformTransactionManager;
 import java.util.Map;
 
 @Configuration
-@RequiredArgsConstructor
 public class PopularPostJobConfig {
     private final JobRepository jobRepository;
     private final PlatformTransactionManager transactionManager;
     private final PostRepository postRepository;
+
+    public PopularPostJobConfig(JobRepository jobRepository,
+                                @Qualifier("dataTransactionManager") PlatformTransactionManager transactionManager,
+                                PostRepository postRepository) {
+        this.jobRepository = jobRepository;
+        this.transactionManager = transactionManager;
+        this.postRepository = postRepository;
+    }
 
     @Bean
     public Job popularPostJob() {
