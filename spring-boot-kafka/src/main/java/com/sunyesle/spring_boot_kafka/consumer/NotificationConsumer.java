@@ -4,10 +4,10 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageConsumer {
+public class NotificationConsumer {
 
-    @KafkaListener(topics = "my-topic", groupId = "message")
+    @KafkaListener(topics = "my-topic", groupId = "notification")
     public void listen(String message) {
-        System.out.println("Received message: " + message);
+        System.out.println("Received notification message: " + message);
     }
 }
