@@ -1,10 +1,16 @@
-package com.sunyesle.spring_boot_retrofit.user;
+package com.sunyesle.spring_boot_retrofit.user.dto;
 
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
-public class UserResponse {
-    private User data;
+public class UserListResponse {
+    private Integer page;
+    private Integer perPage;
+    private Integer total;
+    private Integer totalPages;
+    private List<User> data;
     private Support support;
 
     @Getter
