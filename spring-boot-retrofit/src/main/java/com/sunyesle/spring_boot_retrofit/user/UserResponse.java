@@ -1,6 +1,5 @@
 package com.sunyesle.spring_boot_retrofit.user;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 @Getter
@@ -12,13 +11,8 @@ public class UserResponse {
     public static class User {
         private Integer id;
         private String email;
-
-        @SerializedName("first_name")
         private String firstName;
-
-        @SerializedName("last_name")
         private String lastName;
-
         private String avatar;
     }
 
