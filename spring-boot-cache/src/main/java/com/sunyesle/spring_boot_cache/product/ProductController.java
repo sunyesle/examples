@@ -1,6 +1,8 @@
 package com.sunyesle.spring_boot_cache.product;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
+
+    @GetMapping
+    public ResponseEntity<Page<ProductResponse>> getProducts(@RequestParam(defaultValue = "1") int page,
+                                                             @RequestParam(defaultValue = "20") int pageSize) {
+        return ResponseEntity.ok(productService.getProducts(PageRequest.of(page, pageSize)));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {

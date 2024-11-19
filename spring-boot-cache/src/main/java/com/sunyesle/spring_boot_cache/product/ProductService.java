@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,13 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = "product-list", key = "#pageable.pageNumber", condition = "#pageable.pageNumber <= 5")
+    public Page<ProductResponse> getProducts(Pageable pageable) {
+        log.info("getProducts 호출");
+        return productRepository.findAll(pageable).map(ProductResponse::of);
+    }
 
     @Transactional(readOnly = true)
     @Cacheable(value = "products", key = "#id")
