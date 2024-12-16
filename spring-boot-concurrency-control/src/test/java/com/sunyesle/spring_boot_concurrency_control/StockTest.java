@@ -57,7 +57,7 @@ class StockTest {
         countDownLatch.await();
 
         Stock stock = stockRepository.findById(STOCK_ID).orElseThrow();
-        assertThat(stock.getStock()).isZero();
+        assertThat(stock.getStock()).isNotZero();
     }
 
     @Test
