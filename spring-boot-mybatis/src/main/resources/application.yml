@@ -10,6 +10,11 @@ spring:
     console:
       enabled: true
       path: /h2-console
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.sunyesle.spring_boot_mybatis.**.vo
+  configuration:
+    map-underscore-to-camel-case: true
 decorator:
   datasource:
     p6spy:

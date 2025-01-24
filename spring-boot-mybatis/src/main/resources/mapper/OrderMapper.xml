@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunyesle.spring_boot_mybatis.order.OrderMapper">
+
+    <insert id="insert" parameterType="OrderVO">
+        INSERT INTO orders(member_id, total_amount, order_status)
+        VALUES(#{memberId}, #{totalAmount}, #{orderStatus})
+    </insert>
+
+    <select id="selectAll" resultType="OrderVO">
+        SELECT order_id, member_id, total_amount, order_status
+        FROM orders
+    </select>
+
+</mapper>
