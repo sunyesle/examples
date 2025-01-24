@@ -1,5 +1,7 @@
-package com.sunyesle.spring_boot_mybatis.order;
+package com.sunyesle.spring_boot_mybatis;
 
+import com.sunyesle.spring_boot_mybatis.enums.OrderStatus;
+import com.sunyesle.spring_boot_mybatis.order.OrderMapper;
 import com.sunyesle.spring_boot_mybatis.order.vo.OrderVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,8 @@ class OrderMapperTest {
 
     @Test
     void test() {
-        OrderVO order1 = new OrderVO(1L, 1000, "1001");
-        OrderVO order2 = new OrderVO(1L, 1000, "1002");
+        OrderVO order1 = new OrderVO(1L, 1000, OrderStatus.READY);
+        OrderVO order2 = new OrderVO(1L, 1000, OrderStatus.SHIPPING);
 
         orderMapper.insert(order1);
         orderMapper.insert(order2);
