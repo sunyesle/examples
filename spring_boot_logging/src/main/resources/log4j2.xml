@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="INFO">
+    <Properties>
+        <Property name="logPath">./logs</Property>
+        <Property name="consoleLogPattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %style{%-5p}{green} [%15t] %style{%-40c{1.}}{cyan} : %m%n</Property>
+        <Property name="fileLogPattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %c{1.} : %m%n</Property>
+        <Property name="serviceName">application</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console">
+            <PatternLayout pattern="${consoleLogPattern}" disableAnsi="false" />
+        </Console>
+        <RollingFile name="file" append="true" fileName="${logPath}/${serviceName}.log" filePattern="${logPath}/${serviceName}.%d{yyyy-MM-dd}.%i.log.gz">
+            <PatternLayout pattern="${fileLogPattern}" disableAnsi="true"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" fileIndex="min"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.springframework" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="file" />
+        </Logger>
+
+        <Logger name="com.sunyesle.spring_boot_logging" level="DEBUG" additivity="false" >
+            <AppenderRef ref="console" />
+            <AppenderRef ref="file" />
+        </Logger>
+
+        <Root level="INFO" additivity="false" >
+            <AppenderRef ref="console" />
+            <AppenderRef ref="file" />
+        </Root>
+    </Loggers>
+
+</Configuration>

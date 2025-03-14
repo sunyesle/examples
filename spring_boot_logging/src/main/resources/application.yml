@@ -1,3 +1,5 @@
 spring:
   application:
     name: spring_boot_logging
+logging:
+  config: classpath:log4j2.xml
