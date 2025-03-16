@@ -18,7 +18,11 @@
                 <SizeBasedTriggeringPolicy size="10MB"/>
                 <TimeBasedTriggeringPolicy/>
             </Policies>
-            <DefaultRolloverStrategy max="10" fileIndex="min"/>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logPath}">
+                    <IfLastModified age="15d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
         </RollingFile>
     </Appenders>
 
