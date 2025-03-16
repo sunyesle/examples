@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Configuration status="INFO">
+<Configuration>
     <Properties>
         <Property name="logPath">./logs</Property>
         <Property name="consoleLogPattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %style{%-5p}{green} [%15t] %style{%-40c{1.}}{cyan} : %m%n</Property>
