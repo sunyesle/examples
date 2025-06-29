@@ -29,12 +29,18 @@ public class SseService {
             emitters.remove(userId);
         });
 
-        send(userId, "connect", "SSE connection established");
+        sendEvent(userId, "connect", "SSE connection established");
 
         return emitter;
     }
 
-    private void send(String userId, String eventName, Object data) {
+    public void broadcast(SseBroadcastRequest request) {
+        emitters.forEach((userId, emitter) ->
+                sendEvent(userId, "broadcast", request.message())
+        );
+    }
+
+    private void sendEvent(String userId, String eventName, Object data) {
         SseEmitter emitter = emitters.get(userId);
         if (emitter == null) {
             return;
