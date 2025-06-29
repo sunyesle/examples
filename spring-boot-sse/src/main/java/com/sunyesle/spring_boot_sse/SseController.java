@@ -20,4 +20,9 @@ public class SseController {
     public void broadcast(@RequestBody SseBroadcastRequest request) {
         sseService.broadcast(request);
     }
+
+    @PostMapping("/send")
+    public void send(@RequestBody SseRequest request) {
+        sseService.send(request);
+    }
 }

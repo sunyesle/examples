@@ -40,6 +40,10 @@ public class SseService {
         );
     }
 
+    public void send(SseRequest request) {
+        sendEvent(request.userId(), "send", request.message());
+    }
+
     private void sendEvent(String userId, String eventName, Object data) {
         SseEmitter emitter = emitters.get(userId);
         if (emitter == null) {
