@@ -1,0 +1,53 @@
+<html lang="ko">
+<head>
+    <title>SSE Client</title>
+</head>
+<body>
+<h1>SSE Client</h1>
+
+<label for="userId">User ID:</label>
+<input type="text" id="userId" placeholder="Enter User ID">
+<button id="connectBtn">Connect</button>
+
+<br><br>
+<textarea id="log" rows="15" cols="80" readonly></textarea>
+
+<script>
+    document.getElementById("connectBtn").addEventListener("click", function() {
+        const userId = document.getElementById("userId").value.trim();
+        const logArea = document.getElementById("log");
+
+        if (!userId) {
+            logArea.value += "⚠️ userId를 입력하세요.\n";
+            return;
+        }
+
+        const url = `/api/sse/connect?userId=${encodeURIComponent(userId)}`;
+        const eventSource = new EventSource(url);
+
+        logArea.value += `🚀 SSE 연결 시도 중... (userId=${userId})\n`;
+
+        eventSource.onopen = e => {
+            logArea.value += "✅ SSE 연결 열림\n";
+        };
+
+        eventSource.onerror = e => {
+            logArea.value += "❌ SSE 오류 발생\n";
+            eventSource.close();
+        };
+
+        eventSource.addEventListener("connect", e => {
+            logArea.value += `📥 [connect] ${e.data}\n`;
+        });
+
+        eventSource.addEventListener("broadcast", e => {
+            logArea.value += `📥 [broadcast] ${e.data}\n`;
+        });
+
+        eventSource.addEventListener("send", e => {
+            logArea.value += `📥 [send] ${e.data}\n`;
+        });
+    });
+</script>
+</body>
+</html>
