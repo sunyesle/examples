@@ -1,6 +1,7 @@
 package com.sunyesle.spring_boot_sse;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -58,5 +59,17 @@ public class SseService {
             emitter.completeWithError(e);
             emitters.remove(userId);
         }
+    }
+
+    public void sendHeartbeat() {
+        emitters.forEach((userId, emitter) -> {
+            try {
+                emitter.send(SseEmitter.event()
+                        .comment("heartbeat"));
+            } catch (IOException e) {
+                emitter.completeWithError(e);
+                emitters.remove(userId);
+            }
+        });
     }
 }
