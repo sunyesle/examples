@@ -48,4 +48,14 @@ public class SseService {
                     sinks.remove(userId);
                 });
     }
+
+    public void broadcast(SseBroadcastRequest request) {
+        sinks.forEach((userId, sink) -> {
+            ServerSentEvent<String> event = ServerSentEvent.<String>builder()
+                    .event("broadcast")
+                    .data(request.message())
+                    .build();
+            sink.tryEmitNext(event);
+        });
+    }
 }
