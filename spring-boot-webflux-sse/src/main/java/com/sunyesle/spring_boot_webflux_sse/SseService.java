@@ -58,4 +58,19 @@ public class SseService {
             sink.tryEmitNext(event);
         });
     }
+
+    public void send(SseRequest request) {
+        Sinks.Many<ServerSentEvent<String>> sink = sinks.get(request.userId());
+
+        if (sink == null) {
+            log.info("No connection for userId={}", request.userId());
+            return;
+        }
+
+        ServerSentEvent<String> event = ServerSentEvent.<String>builder()
+                .event("send")
+                .data(request.message())
+                .build();
+        sink.tryEmitNext(event);
+    }
 }
