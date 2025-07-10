@@ -1,0 +1,88 @@
+<html lang="ko">
+<head>
+    <title>SSE Event Sender</title>
+</head>
+<body>
+<h1>SSE Event Sender</h1>
+
+<h2>Broadcast Event</h2>
+<label for="broadcastMessage">Message:</label>
+<input type="text" id="broadcastMessage" placeholder="Enter broadcast message">
+<button id="broadcastSendBtn">send</button>
+
+<hr>
+
+<h2>Send Event</h2>
+<label for="userId">User ID:</label>
+<input type="text" id="userId" placeholder="Enter user ID"><br><br>
+<label for="sendMessage">Message:</label>
+<input type="text" id="sendMessage" placeholder="Enter message">
+<button id="sendBtn">send</button>
+
+<br><br>
+<textarea id="log" rows="15" cols="80" readonly></textarea>
+
+<script>
+    const logArea = document.getElementById("log");
+
+    function log(message) {
+        logArea.value += message + "\n";
+    }
+
+    document.getElementById("broadcastSendBtn").addEventListener("click", function() {
+        const message = document.getElementById("broadcastMessage").value.trim();
+
+        if (!message) {
+            log("⚠️ Broadcast message를 입력하세요.");
+            return;
+        }
+
+        fetch("/api/sse/broadcast", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: message })
+        })
+        .then(response => {
+            if (response.ok) {
+                log("✅ Broadcast 이벤트 전송 성공");
+            } else {
+                log("❌ Broadcast 이벤트 전송 실패");
+            }
+        })
+        .catch(error => {
+            log("❌ Broadcast 요청 에러: " + error);
+        });
+    });
+
+    document.getElementById("sendBtn").addEventListener("click", function() {
+        const userId = document.getElementById("userId").value.trim();
+        const message = document.getElementById("sendMessage").value.trim();
+
+        if (!userId || !message) {
+            log("⚠️ userId와 message를 모두 입력하세요.");
+            return;
+        }
+
+        fetch("/api/sse/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ userId: userId, message: message })
+        })
+        .then(response => {
+            if (response.ok) {
+                log(`✅ Send 이벤트 전송 성공 (userId=${userId})`);
+            } else {
+                log("❌ Send 이벤트 전송 실패");
+            }
+        })
+        .catch(error => {
+            log("❌ Send 요청 에러: " + error);
+        });
+    });
+</script>
+</body>
+</html>
