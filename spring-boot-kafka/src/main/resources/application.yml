@@ -3,9 +3,8 @@ spring:
     name: spring-boot-kafka
   kafka:
     bootstrap-servers:
-      - localhost:10000
-      - localhost:10001
-      - localhost:10002
+      - localhost:19092
   docker:
     compose:
       enabled: true
+      file: docker-compose-single-broker.yml
