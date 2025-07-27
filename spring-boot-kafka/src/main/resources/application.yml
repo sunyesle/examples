@@ -2,8 +2,14 @@ spring:
   application:
     name: spring-boot-kafka
   kafka:
-    bootstrap-servers:
-      - localhost:19092
+    bootstrap-servers: localhost:19092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: default-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   docker:
     compose:
       enabled: true
