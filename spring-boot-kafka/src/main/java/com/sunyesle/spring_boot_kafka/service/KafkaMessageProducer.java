@@ -14,4 +14,8 @@ public class KafkaMessageProducer {
     public void sendMessage(String message) {
         kafkaTemplate.send(TOPIC_NAME, message);
     }
+
+    public void sendMessageWithKey(String key, String message) {
+        kafkaTemplate.send(TOPIC_NAME, key, message);
+    }
 }
