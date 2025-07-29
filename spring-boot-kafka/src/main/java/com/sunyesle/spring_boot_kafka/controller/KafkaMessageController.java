@@ -20,4 +20,9 @@ public class KafkaMessageController {
     public void sendMessageWithKey(@PathVariable String key, @RequestBody String message) {
         kafkaMessageProducer.sendMessageWithKey(key, message);
     }
+
+    @PostMapping("/with-partition/{partition}")
+    public void sendMessageWithKey(@PathVariable int partition, @RequestBody String message) {
+        kafkaMessageProducer.sendMessageWithPartition(partition, message);
+    }
 }
