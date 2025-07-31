@@ -1,6 +1,13 @@
 spring:
   application:
     name: spring-boot-kafka
+  profiles:
+    active: kafka-multi-broker
+---
+spring:
+  config:
+    activate:
+      on-profile: kafka-single-broker
   kafka:
     bootstrap-servers: localhost:19092
     producer:
@@ -14,3 +21,21 @@ spring:
     compose:
       enabled: true
       file: docker-compose-single-broker.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: kafka-multi-broker
+  kafka:
+    bootstrap-servers: localhost:19092,localhost:19093,localhost:19094
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: default-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  docker:
+    compose:
+      enabled: true
+      file: docker-compose-multi-broker.yml
