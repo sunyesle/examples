@@ -1,5 +1,6 @@
 package com.sunyesle.spring_boot_kafka.service;
 
+import com.sunyesle.spring_boot_kafka.dto.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -9,17 +10,17 @@ import org.springframework.stereotype.Component;
 public class KafkaMessageProducer {
     private static final String TOPIC_NAME = "message-topic";
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, MessageDto> kafkaTemplate;
 
-    public void sendMessage(String message) {
+    public void sendMessage(MessageDto message) {
         kafkaTemplate.send(TOPIC_NAME, message);
     }
 
-    public void sendMessageWithKey(String key, String message) {
+    public void sendMessageWithKey(String key, MessageDto message) {
         kafkaTemplate.send(TOPIC_NAME, key, message);
     }
 
-    public void sendMessageWithPartition(int partition, String message) {
+    public void sendMessageWithPartition(int partition, MessageDto message) {
         kafkaTemplate.send(TOPIC_NAME, partition, "", message);
     }
 }

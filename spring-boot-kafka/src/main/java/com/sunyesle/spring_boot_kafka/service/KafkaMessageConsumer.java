@@ -1,5 +1,6 @@
 package com.sunyesle.spring_boot_kafka.service;
 
+import com.sunyesle.spring_boot_kafka.dto.MessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -13,7 +14,7 @@ public class KafkaMessageConsumer {
     private static final String TOPIC_NAME = "message-topic";
 
     @KafkaListener(topics = TOPIC_NAME)
-    public void listen(ConsumerRecord<String, String> data) {
+    public void listen(ConsumerRecord<String, MessageDto> data) {
         log.info("Consumed message: key={}, value={}, partition={}, offset={}",
                 data.key(), data.value(), data.partition(), data.offset());
     }

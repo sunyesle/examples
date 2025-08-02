@@ -2,7 +2,7 @@ spring:
   application:
     name: spring-boot-kafka
   profiles:
-    active: kafka-multi-broker
+    active: kafka-single-broker
 ---
 spring:
   config:
@@ -12,11 +12,13 @@ spring:
     bootstrap-servers: localhost:19092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       group-id: default-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.sunyesle.spring_boot_kafka.dto
   docker:
     compose:
       enabled: true
@@ -30,11 +32,13 @@ spring:
     bootstrap-servers: localhost:19092,localhost:19093,localhost:19094
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       group-id: default-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.sunyesle.spring_boot_kafka.dto
   docker:
     compose:
       enabled: true
