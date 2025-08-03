@@ -1,10 +1,12 @@
-package com.sunyesle.spring_boot_kafka.controller;
+package com.sunyesle.spring_boot_kafka.v1.controller;
 
 import com.sunyesle.spring_boot_kafka.dto.MessageDto;
-import com.sunyesle.spring_boot_kafka.service.KafkaMessageProducer;
+import com.sunyesle.spring_boot_kafka.v1.service.KafkaMessageProducer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
+@Profile({"kafka-single-broker", "kafka-multi-broker"})
 @RestController
 @RequestMapping("/api/messages")
 @RequiredArgsConstructor

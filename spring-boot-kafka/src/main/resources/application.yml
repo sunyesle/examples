@@ -43,3 +43,26 @@ spring:
     compose:
       enabled: true
       file: docker-compose-multi-broker.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: kafka-schema-registry
+  kafka:
+    bootstrap-servers: localhost:19092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      properties:
+        schema.registry.url: http://localhost:18081
+    consumer:
+      group-id: default-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        schema.registry.url: http://localhost:18081
+        specific.avro.reader: true
+  docker:
+    compose:
+      enabled: true
+      file: docker-compose-schema-registry.yml

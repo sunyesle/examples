@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "MessageEvent",
+  "namespace": "com.sunyesle.spring_boot_kafka.avro",
+  "fields": [
+    { "name": "title", "type": "string" },
+    { "name": "body", "type": "string" }
+  ]
+}

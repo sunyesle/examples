@@ -1,10 +1,12 @@
-package com.sunyesle.spring_boot_kafka.service;
+package com.sunyesle.spring_boot_kafka.v1.service;
 
 import com.sunyesle.spring_boot_kafka.dto.MessageDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+@Profile({"kafka-single-broker", "kafka-multi-broker"})
 @Component
 @RequiredArgsConstructor
 public class KafkaMessageProducer {

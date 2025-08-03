@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.4'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.github.davidmc24.gradle.plugin.avro' version '1.9.1'
 }
 
 group = 'com.sunyesle'
@@ -21,11 +22,17 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url "https://packages.confluent.io/maven/" }
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.kafka:spring-kafka'
+
+	// schema registry
+	implementation 'io.confluent:kafka-avro-serializer:8.0.0'
+	implementation 'io.confluent:kafka-schema-registry-client:8.0.0'
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -36,4 +43,12 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs += 'build/generated-main-avro-java'
+		}
+	}
 }
