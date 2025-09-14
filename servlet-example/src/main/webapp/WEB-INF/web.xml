@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/webapp_3_1.xsd"
          version="3.1">
-
+<!--
   <servlet>
     <servlet-name>exampleServlet</servlet-name>
     <servlet-class>com.sunys.servlet.ExampleServlet</servlet-class>
@@ -28,5 +28,5 @@
   <listener>
     <listener-class>com.sunys.listener.ExampleListener</listener-class>
   </listener>
-
+-->
 </web-app>
