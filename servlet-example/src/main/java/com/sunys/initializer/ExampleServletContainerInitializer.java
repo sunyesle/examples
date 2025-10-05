@@ -3,9 +3,9 @@ package com.sunys.initializer;
 import com.sunys.filter.ExampleFilter;
 import com.sunys.listener.ExampleListener;
 import com.sunys.servlet.ExampleServlet;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.HandlesTypes;
 
-import javax.servlet.*;
-import javax.servlet.annotation.HandlesTypes;
 import java.util.Set;
 
 @HandlesTypes({ExampleWebInitializer.class})
@@ -15,7 +15,7 @@ public class ExampleServletContainerInitializer implements ServletContainerIniti
     public void onStartup(Set<Class<?>> set, ServletContext servletContext) throws ServletException {
         System.out.println("ExampleServletContainerInitializer onStartup");
 
-        for(Class<?> handleClass: set) {
+        for (Class<?> handleClass : set) {
             System.out.println(handleClass.getName());
         }
 
