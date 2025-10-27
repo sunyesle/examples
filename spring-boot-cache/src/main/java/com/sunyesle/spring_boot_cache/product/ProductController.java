@@ -14,7 +14,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Page<ProductResponse>> getProducts(@RequestParam(defaultValue = "1") int page,
+    public ResponseEntity<Page<ProductResponse>> getProducts(@RequestParam(defaultValue = "0") int page,
                                                              @RequestParam(defaultValue = "20") int pageSize) {
         return ResponseEntity.ok(productService.getProducts(PageRequest.of(page, pageSize)));
     }
