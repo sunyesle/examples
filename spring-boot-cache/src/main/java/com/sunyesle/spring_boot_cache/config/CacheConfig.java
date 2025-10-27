@@ -21,10 +21,13 @@ public class CacheConfig {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
         // 각 캐시 타입에 대한 설정 적용
         List<CaffeineCache> caches = Arrays.stream(CacheType.values())
-                .map(cache -> new CaffeineCache(cache.getCacheName(), Caffeine.newBuilder()
-                                .expireAfterWrite(cache.getExpiredAfterWrite(), TimeUnit.SECONDS)
-                                .maximumSize(cache.getMaximumSize())
-                                .build()
+                .map(cache ->
+                        new CaffeineCache(
+                                cache.getCacheName(),
+                                Caffeine.newBuilder()
+                                        .expireAfterWrite(cache.getExpireAfterWrite(), TimeUnit.SECONDS)
+                                        .maximumSize(cache.getMaximumSize())
+                                        .build()
                         )
                 )
                 .toList();
