@@ -12,3 +12,8 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql: trace
     org.springframework.cache.interceptor: trace
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "metrics,caches"
