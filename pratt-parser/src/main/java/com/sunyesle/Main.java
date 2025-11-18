@@ -20,6 +20,9 @@ public class Main {
 
                 Expr expr = parser.parseExpr(0);
                 System.out.println("AST: " + expr);
+
+                int result = Evaluator.eval(expr);
+                System.out.println("result: " + result);
             } catch (Exception e) {
                 System.out.println("error: " + e.getMessage());
             }
