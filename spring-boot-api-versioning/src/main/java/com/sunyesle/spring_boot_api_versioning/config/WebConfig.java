@@ -12,6 +12,7 @@ public class WebConfig implements WebMvcConfigurer {
         configurer
                 .addSupportedVersions("1.0", "2.0")
                 .usePathSegment(1)
+                .useRequestHeader("X-API-Version")
         ;
     }
 }

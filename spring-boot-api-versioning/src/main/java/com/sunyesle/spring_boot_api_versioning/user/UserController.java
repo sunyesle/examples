@@ -27,5 +27,19 @@ public class UserController {
                 .map(userMapper::toV2)
                 .toList();
     }
+
+    @GetMapping(path = "/users", version = "1.0")
+    public List<UserDTOv1> getV1() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toV1)
+                .toList();
+    }
+
+    @GetMapping(path = "/users", version = "2.0")
+    public List<UserDTOv2> getV2() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toV2)
+                .toList();
+    }
 }
 

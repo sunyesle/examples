@@ -6,3 +6,4 @@ spring:
       supported: 1.0,2.0
       use:
         path-segment: 1
+        header: X-API-Version
