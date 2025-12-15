@@ -48,4 +48,22 @@ class VersioningTest {
                 .andExpectAll(V2_MATCHERS)
                 .andDo(print());
     }
+
+    @Test
+    void header_V1() throws Exception {
+        mockMvc.perform(get("/api/users")
+                        .header("X-API-Version", "1.0"))
+                .andExpect(status().isOk())
+                .andExpectAll(V1_MATCHERS)
+                .andDo(print());
+    }
+
+    @Test
+    void header_V2() throws Exception {
+        mockMvc.perform(get("/api/users")
+                        .header("X-API-Version", "2.0"))
+                .andExpect(status().isOk())
+                .andExpectAll(V2_MATCHERS)
+                .andDo(print());
+    }
 }
