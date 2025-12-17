@@ -13,6 +13,7 @@ public class VersioningWebConfig implements WebMvcConfigurer {
     public void configureApiVersioning(ApiVersionConfigurer configurer) {
         configurer
                 .addSupportedVersions("1.0", "2.0")
+                .setDefaultVersion("1.0")
                 .useRequestHeader("X-API-Version")
         ;
     }

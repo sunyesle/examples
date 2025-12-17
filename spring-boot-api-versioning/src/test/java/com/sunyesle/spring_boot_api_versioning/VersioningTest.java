@@ -36,6 +36,14 @@ class VersioningTest {
     };
 
     @Test
+    void fallback_V1() throws Exception {
+        mockMvc.perform(get("/api/users"))
+                .andExpect(status().isOk())
+                .andExpectAll(V1_MATCHERS)
+                .andDo(print());
+    }
+
+    @Test
     void header_V1() throws Exception {
         mockMvc.perform(get("/api/users")
                         .header("X-API-Version", "1.0"))

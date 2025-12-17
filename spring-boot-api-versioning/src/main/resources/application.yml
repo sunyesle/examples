@@ -23,5 +23,6 @@ spring:
   mvc:
     apiversion:
       supported: 1.0,2.0
+      default: 1.0
       use:
         header: X-API-Version
