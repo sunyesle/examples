@@ -15,8 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("versioning")
-class VersioningTest {
+@ActiveProfiles("path-versioning")
+class PathVersioningTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,18 +36,16 @@ class VersioningTest {
     };
 
     @Test
-    void header_V1() throws Exception {
-        mockMvc.perform(get("/api/users")
-                        .header("X-API-Version", "1.0"))
+    void path_V1() throws Exception {
+        mockMvc.perform(get("/api/v1.0/users"))
                 .andExpect(status().isOk())
                 .andExpectAll(V1_MATCHERS)
                 .andDo(print());
     }
 
     @Test
-    void header_V2() throws Exception {
-        mockMvc.perform(get("/api/users")
-                        .header("X-API-Version", "2.0"))
+    void path_V2() throws Exception {
+        mockMvc.perform(get("/api/v2.0/users"))
                 .andExpect(status().isOk())
                 .andExpectAll(V2_MATCHERS)
                 .andDo(print());

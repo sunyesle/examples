@@ -1,9 +1,27 @@
 spring:
   application:
     name: spring-boot-api-versioning
+  profiles:
+    active: versioning
+
+---
+spring:
+  config:
+    activate:
+      on-profile: path-versioning
   mvc:
     apiversion:
       supported: 1.0,2.0
       use:
         path-segment: 1
+
+---
+spring:
+  config:
+    activate:
+      on-profile: versioning
+  mvc:
+    apiversion:
+      supported: 1.0,2.0
+      use:
         header: X-API-Version

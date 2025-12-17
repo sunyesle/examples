@@ -1,6 +1,7 @@
 package com.sunyesle.spring_boot_api_versioning.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +11,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class UserController {
+@Profile("path-versioning")
+public class UserPathVersioningController {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
@@ -23,20 +25,6 @@ public class UserController {
 
     @GetMapping(path = "/v{version}/users", version = "2.0")
     public List<UserDTOv2> getPathV2() {
-        return userRepository.findAll().stream()
-                .map(userMapper::toV2)
-                .toList();
-    }
-
-    @GetMapping(path = "/users", version = "1.0")
-    public List<UserDTOv1> getV1() {
-        return userRepository.findAll().stream()
-                .map(userMapper::toV1)
-                .toList();
-    }
-
-    @GetMapping(path = "/users", version = "2.0")
-    public List<UserDTOv2> getV2() {
         return userRepository.findAll().stream()
                 .map(userMapper::toV2)
                 .toList();
