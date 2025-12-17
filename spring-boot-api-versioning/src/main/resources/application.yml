@@ -9,11 +9,11 @@ spring:
   config:
     activate:
       on-profile: path-versioning
-  mvc:
-    apiversion:
-      supported: 1.0,2.0
-      use:
-        path-segment: 1
+#  mvc:
+#    apiversion:
+#      supported: 1.0,2.0
+#      use:
+#        path-segment: 1
 
 ---
 spring:

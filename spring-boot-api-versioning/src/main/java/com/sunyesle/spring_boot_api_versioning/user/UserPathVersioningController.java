@@ -10,20 +10,20 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/users")
 @Profile("path-versioning")
 public class UserPathVersioningController {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    @GetMapping(path = "/v{version}/users", version = "1.0")
+    @GetMapping(version = "1.0")
     public List<UserDTOv1> getPathV1() {
         return userRepository.findAll().stream()
                 .map(userMapper::toV1)
                 .toList();
     }
 
-    @GetMapping(path = "/v{version}/users", version = "2.0")
+    @GetMapping(version = "2.0")
     public List<UserDTOv2> getPathV2() {
         return userRepository.findAll().stream()
                 .map(userMapper::toV2)
