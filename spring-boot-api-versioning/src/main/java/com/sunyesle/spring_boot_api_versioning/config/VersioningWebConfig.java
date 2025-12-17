@@ -1,6 +1,7 @@
 package com.sunyesle.spring_boot_api_versioning.config;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ApiVersionConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -16,6 +17,7 @@ public class VersioningWebConfig implements WebMvcConfigurer {
                 .setDefaultVersion("1.0")
                 .useRequestHeader("X-API-Version")
                 .useQueryParam("version")
+                .useMediaTypeParameter(MediaType.APPLICATION_JSON, "version")
         ;
     }
 }

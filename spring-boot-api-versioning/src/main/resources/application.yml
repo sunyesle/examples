@@ -27,3 +27,5 @@ spring:
       use:
         header: X-API-Version
         query-parameter: version
+        media-type-parameter:
+          "[application/json]": version
