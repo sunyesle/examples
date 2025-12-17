@@ -60,4 +60,22 @@ class VersioningTest {
                 .andExpectAll(V2_MATCHERS)
                 .andDo(print());
     }
+
+    @Test
+    void query_parameter_V1() throws Exception {
+        mockMvc.perform(get("/api/users")
+                        .queryParam("version", "1.0"))
+                .andExpect(status().isOk())
+                .andExpectAll(V1_MATCHERS)
+                .andDo(print());
+    }
+
+    @Test
+    void query_parameter_V2() throws Exception {
+        mockMvc.perform(get("/api/users")
+                        .queryParam("version", "2.0"))
+                .andExpect(status().isOk())
+                .andExpectAll(V2_MATCHERS)
+                .andDo(print());
+    }
 }

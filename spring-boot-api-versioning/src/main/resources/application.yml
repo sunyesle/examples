@@ -26,3 +26,4 @@ spring:
       default: 1.0
       use:
         header: X-API-Version
+        query-parameter: version
