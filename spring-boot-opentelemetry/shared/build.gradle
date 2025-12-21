@@ -24,4 +24,7 @@ dependencies {
 	implementation 'org.springframework:spring-context'
 	implementation 'io.micrometer:micrometer-core'
 	implementation 'org.springframework:spring-web'
+
+	implementation "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:${opentelemetryLogbackAppenderVersion}"
+	implementation 'ch.qos.logback:logback-core'
 }
