@@ -23,7 +23,8 @@ public class HelloService {
         this.greetingServiceClient = greetingServiceClient;
     }
 
-    public String sayHello(Locale locale, long userId) {
+    @Observed(name = "say-hello")
+    public String sayHello(@ObservationKeyValue("locale") Locale locale, @ObservationKeyValue("user.id") long userId) {
         LOGGER.info("Saying hello to user {} with locale {}", userId, locale);
         User user = userServiceClient.find(userId);
         String greeting = greetingServiceClient.greeting(locale);
