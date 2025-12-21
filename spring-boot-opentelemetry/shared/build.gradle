@@ -27,4 +27,6 @@ dependencies {
 
 	implementation "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:${opentelemetryLogbackAppenderVersion}"
 	implementation 'ch.qos.logback:logback-core'
+
+	implementation 'jakarta.servlet:jakarta.servlet-api'
 }
