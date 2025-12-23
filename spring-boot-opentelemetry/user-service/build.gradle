@@ -35,6 +35,7 @@ dependencies {
 	runtimeOnly "io.opentelemetry.instrumentation:opentelemetry-logback-appender-1.0:${opentelemetryLogbackAppenderVersion}"
 
 	implementation 'org.springframework.boot:spring-boot-starter-aspectj'
+	testImplementation 'org.springframework.boot:spring-boot-starter-aspectj-test'
 }
 
 tasks.named('test') {
