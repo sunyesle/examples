@@ -11,4 +11,9 @@ public class FilterConfig {
     TraceIdHeaderFilter traceIdHeaderFilter(Tracer tracer) {
         return new TraceIdHeaderFilter(tracer);
     }
+
+    @Bean
+    HeaderLoggerFilter headerLoggerFilter() {
+        return new HeaderLoggerFilter();
+    }
 }
