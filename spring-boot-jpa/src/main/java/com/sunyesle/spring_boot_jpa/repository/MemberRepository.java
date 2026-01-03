@@ -1,5 +1,6 @@
-package com.sunyesle.spring_boot_jpa.member;
+package com.sunyesle.spring_boot_jpa.repository;
 
+import com.sunyesle.spring_boot_jpa.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
