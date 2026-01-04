@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "member")
@@ -22,6 +24,9 @@ public class Member {
 
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
     public Member(String name, Integer age, boolean active, LocalDateTime createdAt, Address address) {
         this.name = name;
