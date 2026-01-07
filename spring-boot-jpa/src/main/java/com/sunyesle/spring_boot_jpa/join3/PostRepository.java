@@ -1,29 +1,11 @@
 package com.sunyesle.spring_boot_jpa.join3;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long>, CustomPostRepository {
-
-    @Override
-    @EntityGraph(attributePaths = "comments")
-    List<Post> findAll();
-
-    @EntityGraph(attributePaths = "comments")
-    List<Post> findByTitle(String title);
-
-    @EntityGraph(attributePaths = "comments")
-    @Query("SELECT p FROM Post p WHERE p.title = :title")
-    List<Post> findByTitleJpql(String title);
-
-    @Query("SELECT p FROM Post p LEFT JOIN FETCH p.comments")
-    List<Post> findAllLeftJoinFetch();
-
-    @Query("SELECT p FROM Post p JOIN FETCH p.comments")
-    List<Post> findAllJoinFetch();
 
     @Query("""
             SELECT p
