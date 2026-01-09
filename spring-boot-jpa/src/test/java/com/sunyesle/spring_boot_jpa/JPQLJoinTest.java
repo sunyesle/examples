@@ -48,8 +48,8 @@ class JPQLJoinTest {
         // 배송 정보(Delivery) 생성
         Delivery delivery1 = new Delivery(address, DeliveryStatus.COMP);
         Delivery delivery2 = new Delivery(address, DeliveryStatus.READY);
-        order1.changeDelivery(delivery1);
-        order2.changeDelivery(delivery2);
+        order1.setDelivery(delivery1);
+        order2.setDelivery(delivery2);
 
         // 주문 상품(OrderItem) 생성
         OrderItem orderItem1 = new OrderItem(book, 20000, 2);

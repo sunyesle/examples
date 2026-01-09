@@ -39,12 +39,12 @@ public class Order {
         this.status = status;
     }
 
-    public void changeDelivery(Delivery delivery) {
+    public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
     }
 
     public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
-        orderItem.changeOrder(this);
+        orderItem.setOrder(this);
     }
 }

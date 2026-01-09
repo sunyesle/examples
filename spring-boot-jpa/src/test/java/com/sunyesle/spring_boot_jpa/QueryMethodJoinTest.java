@@ -42,7 +42,7 @@ class QueryMethodJoinTest {
 
         // 배송 정보(Delivery) 생성
         Delivery delivery = new Delivery(address, DeliveryStatus.READY);
-        order.changeDelivery(delivery);
+        order.setDelivery(delivery);
 
         // 주문 상품(OrderItem) 생성
         OrderItem orderItem1 = new OrderItem(book, 20000, 2);

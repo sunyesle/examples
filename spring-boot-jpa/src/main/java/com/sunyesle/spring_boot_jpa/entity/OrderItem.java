@@ -31,7 +31,7 @@ public class OrderItem {
         this.count = count;
     }
 
-    public void changeOrder(Order order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 }
