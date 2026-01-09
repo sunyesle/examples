@@ -1,4 +1,4 @@
-package com.sunyesle.spring_boot_jpa.global.config;
+package com.sunyesle.spring_boot_jpa.config;
 
 import com.p6spy.engine.spy.P6SpyOptions;
 import jakarta.annotation.PostConstruct;

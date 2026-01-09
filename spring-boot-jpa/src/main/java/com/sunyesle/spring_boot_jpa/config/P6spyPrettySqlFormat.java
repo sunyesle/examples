@@ -1,4 +1,4 @@
-package com.sunyesle.spring_boot_jpa.global.config;
+package com.sunyesle.spring_boot_jpa.config;
 
 import com.p6spy.engine.common.P6Util;
 import com.p6spy.engine.logging.Category;
