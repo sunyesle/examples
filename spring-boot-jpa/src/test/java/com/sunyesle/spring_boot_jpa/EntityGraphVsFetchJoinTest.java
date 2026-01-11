@@ -16,7 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class EntityGraphTest {
+class EntityGraphVsFetchJoinTest {
 
     @Autowired
     EntityManager em;
