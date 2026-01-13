@@ -23,16 +23,11 @@ class QuerydslSearchConditionTest {
 
     @BeforeEach
     void setup() {
-        Member member1 = new Member("member1", 10, null);
-        Member member2 = new Member("member2", 20, null);
-        Member member3 = new Member("member3", 30, null);
-        Member member4 = new Member("member4", 40, null);
-        Member member5 = new Member("member5", 50, null);
-        em.persist(member1);
-        em.persist(member2);
-        em.persist(member3);
-        em.persist(member4);
-        em.persist(member5);
+        em.persist(new Member("member1", 10, null));
+        em.persist(new Member("member2", 20, null));
+        em.persist(new Member("member3", 30, null));
+        em.persist(new Member("member4", 40, null));
+        em.persist(new Member("member5", 50, null));
 
         em.flush();
         em.clear();
