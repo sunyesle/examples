@@ -10,31 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "team")
+@Table(name = "company")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(exclude = {"members", "company"})
-public class Team {
+@ToString(exclude = {"teams"})
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "team_id")
+    @Column(name = "company_id")
     private Long id;
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @OneToMany(mappedBy = "company")
+    List<Team> teams = new ArrayList<>();
 
-    @OneToMany(mappedBy = "team")
-    List<Member> members = new ArrayList<>();
-
-    public Team(String name) {
+    public Company(String name) {
         this.name = name;
-    }
-
-    public Team(String name, Company company) {
-        this.name = name;
-        this.company = company;
     }
 }
