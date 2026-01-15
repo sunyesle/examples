@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "member")
 @Getter
@@ -19,6 +21,7 @@ public class Member {
 
     private String name;
     private Integer age;
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
@@ -28,5 +31,12 @@ public class Member {
         this.name = name;
         this.age = age;
         this.team = team;
+    }
+
+    public Member(String name, Integer age, Team team, LocalDateTime createdAt) {
+        this.name = name;
+        this.age = age;
+        this.team = team;
+        this.createdAt = createdAt;
     }
 }
