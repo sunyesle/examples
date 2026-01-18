@@ -5,7 +5,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sunyesle.spring_boot_jpa_querydsl.config.DataJpaQuerydslTest;
 import com.sunyesle.spring_boot_jpa_querydsl.entity.Member;
-import com.sunyesle.spring_boot_jpa_querydsl.entity.Team;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,15 +26,10 @@ class QuerydslDynamicSQLTest {
 
     @BeforeEach
     void setup() {
-        Team teamA = new Team("TeamA");
-        Team teamB = new Team("TeamB");
-        em.persist(teamA);
-        em.persist(teamB);
-
-        em.persist(new Member("member1", 10, teamA));
-        em.persist(new Member("member2", 20, teamA));
-        em.persist(new Member("member3", 30, teamB));
-        em.persist(new Member("member4", 40, teamB));
+        em.persist(new Member("member1", 10));
+        em.persist(new Member("member2", 20));
+        em.persist(new Member("member3", 30));
+        em.persist(new Member("member4", 40));
     }
 
 

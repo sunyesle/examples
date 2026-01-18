@@ -29,18 +29,13 @@ class QuerydslJoinOnTest {
     void setup() {
         Team teamA = new Team("TeamA");
         Team teamB = new Team("TeamB");
-        Team teamC = new Team("TeamC");
-        Team teamD = new Team("TeamD");
         em.persist(teamA);
         em.persist(teamB);
-        em.persist(teamC);
-        em.persist(teamD);
 
         em.persist(new Member("member1", 10, teamA));
         em.persist(new Member("member2", 20, teamA));
         em.persist(new Member("member3", 30, teamB));
-        em.persist(new Member("member4", 40, null));
-        em.persist(new Member("member5", 50, null));
+        em.persist(new Member("member4", 40, teamB));
         em.persist(new Member("TeamA", 20, null));
         em.persist(new Member("TeamB", 20, null));
     }

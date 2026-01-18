@@ -32,20 +32,15 @@ class QuerydslJoinFetchTest {
 
     @BeforeEach
     void setup() {
-        Team teamA = new Team("TeamA");
-        Team teamB = new Team("TeamB");
-        Team teamC = new Team("TeamC");
-        Team teamD = new Team("TeamD");
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
         em.persist(teamA);
         em.persist(teamB);
-        em.persist(teamC);
-        em.persist(teamD);
 
         em.persist(new Member("member1", 10, teamA));
         em.persist(new Member("member2", 20, teamA));
         em.persist(new Member("member3", 30, teamB));
-        em.persist(new Member("member4", 40, null));
-        em.persist(new Member("member5", 50, null));
+        em.persist(new Member("member4", 40, teamB));
 
         em.flush();
         em.clear();

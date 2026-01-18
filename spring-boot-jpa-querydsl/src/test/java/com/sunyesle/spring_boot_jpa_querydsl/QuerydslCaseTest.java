@@ -27,10 +27,10 @@ class QuerydslCaseTest {
 
     @BeforeEach
     void setup() {
-        em.persist(new Member("member1", 10, null));
-        em.persist(new Member("member2", 20, null));
-        em.persist(new Member("member3", 30, null));
-        em.persist(new Member("member4", 40, null));
+        em.persist(new Member("member1", 10));
+        em.persist(new Member("member2", 20));
+        em.persist(new Member("member3", 30));
+        em.persist(new Member("member4", 40));
     }
 
     @Test
