@@ -4,8 +4,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sunyesle.spring_boot_jpa_querydsl.config.DataJpaQuerydslTest;
-import com.sunyesle.spring_boot_jpa_querydsl.entity.Member;
-import com.sunyesle.spring_boot_jpa_querydsl.entity.Team;
+import com.sunyesle.spring_boot_jpa_querydsl.entity.TestEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.sunyesle.spring_boot_jpa_querydsl.entity.QMember.member;
+import static com.sunyesle.spring_boot_jpa_querydsl.entity.QTestEntity.testEntity;
 
 @DataJpaQuerydslTest
 class QuerydslFunctionTest {
@@ -28,46 +27,41 @@ class QuerydslFunctionTest {
 
     @BeforeEach
     void setup() {
-        Team teamA = new Team("TeamA");
-        Team teamB = new Team("TeamB");
-        em.persist(teamA);
-        em.persist(teamB);
-
-        em.persist(new Member("member1", 12, teamA, LocalDateTime.now()));
-        em.persist(new Member("member2 ", 25, teamA, LocalDateTime.now()));
-        em.persist(new Member(null, -30, teamB, LocalDateTime.now()));
+        em.persist(new TestEntity("member1" , 12 , LocalDateTime.now()));
+        em.persist(new TestEntity("member2 ", 25 , LocalDateTime.now()));
+        em.persist(new TestEntity(null      , -30, LocalDateTime.now()));
     }
 
     @Test
     void function() {
         List<Tuple> result = queryFactory
                 .select(
-                        member.name.as("member_name"), // 별칭 지정
+                        testEntity.str.as("member_name"), // 별칭 지정
 
-                        member.name.lower(),
-                        member.name.upper(),
-                        member.name.substring(3, 6),
-                        member.name.concat("_").concat(member.age.stringValue()),
-                        member.name.trim(),
-                        member.name.length(),
+                        testEntity.str.lower(),
+                        testEntity.str.upper(),
+                        testEntity.str.substring(3, 6),
+                        testEntity.str.concat("_").concat(testEntity.num.stringValue()),
+                        testEntity.str.trim(),
+                        testEntity.str.length(),
 
-                        member.age.add(1),
-                        member.age.subtract(1),
-                        member.age.multiply(2),
-                        member.age.divide(2),
-                        member.age.mod(10),
-                        member.age.abs(),
-                        member.age.negate(),
-                        member.age.round(),
-                        member.age.floor(),
-                        member.age.ceil(),
+                        testEntity.num.add(1),
+                        testEntity.num.subtract(1),
+                        testEntity.num.multiply(2),
+                        testEntity.num.divide(2),
+                        testEntity.num.mod(10),
+                        testEntity.num.abs(),
+                        testEntity.num.negate(),
+                        testEntity.num.round(),
+                        testEntity.num.floor(),
+                        testEntity.num.ceil(),
 
-                        member.createdAt.year(),
-                        member.createdAt.month(),
-                        member.createdAt.dayOfMonth(),
+                        testEntity.createdAt.year(),
+                        testEntity.createdAt.month(),
+                        testEntity.createdAt.dayOfMonth(),
 
-                        member.name.coalesce("default"), // name이 null 이면 default 반환
-                        member.name.nullif("member1"), // name이 member1이면 null 반환
+                        testEntity.str.coalesce("default"), // name이 null 이면 default 반환
+                        testEntity.str.nullif("member1"), // name이 member1이면 null 반환
 
                         Expressions.constant("A"),
 
@@ -75,10 +69,10 @@ class QuerydslFunctionTest {
                         Expressions.currentTime(),
                         Expressions.currentTimestamp(),
 
-                        Expressions.stringTemplate("replace({0},{1},{2})", member.name, "member", "M"),
-                        Expressions.numberTemplate(Integer.class, "abs({0})", member.age)
+                        Expressions.stringTemplate("replace({0},{1},{2})", testEntity.str, "member", "M"),
+                        Expressions.numberTemplate(Integer.class, "abs({0})", testEntity.num)
                 )
-                .from(member)
+                .from(testEntity)
                 .fetch();
 
         System.out.println(result);
