@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: spring-boot-bulk-insert
+  datasource:
+    url: jdbc:mysql://localhost:3306/my_db
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
