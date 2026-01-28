@@ -2,7 +2,7 @@ spring:
   application:
     name: spring-boot-bulk-insert
   datasource:
-    url: jdbc:mysql://localhost:3306/my_db
+    url: jdbc:mysql://localhost:3306/my_db?rewriteBatchedStatements=true&profileSQL=true&logger=Slf4JLogger&maxQuerySizeToLog=999999
     username: user
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
