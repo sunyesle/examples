@@ -1,5 +1,6 @@
 package com.sunyesle.spring_boot_bulk_insert.entity;
 
+import com.sunyesle.spring_boot_bulk_insert.util.UuidUtil;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class TeamUuid implements Persistable<UUID> {
     protected void markNotNew() { this.isNew = false; }
 
     public TeamUuid(String name) {
-        this.id = UUID.randomUUID();
+        this.id = UuidUtil.generateUuid();
         this.name = name;
     }
 

@@ -15,10 +15,8 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @DataJdbcTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -42,7 +40,7 @@ class JdbcUuidTest {
 
         SqlParameterSource[] batchArgs = teamRequests.stream()
                 .map(m -> new MapSqlParameterSource()
-                        .addValue("teamId", UuidUtil.toBytes(UUID.randomUUID()))
+                        .addValue("teamId", UuidUtil.toBytes(UuidUtil.generateUuid()))
                         .addValue("name", m.name()))
                 .toArray(SqlParameterSource[]::new);
 
@@ -57,7 +55,7 @@ class JdbcUuidTest {
         List<MapSqlParameterSource> memberParamList = new ArrayList<>();
 
         for (TeamRequest teamDto : teamRequests) {
-            byte[] teamId = UuidUtil.toBytes(UUID.randomUUID());
+            byte[] teamId = UuidUtil.toBytes(UuidUtil.generateUuid());
 
             teamParamList.add(new MapSqlParameterSource()
                     .addValue("teamId", teamId)
@@ -66,7 +64,7 @@ class JdbcUuidTest {
 
             for (MemberRequest memberDto : teamDto.members()) {
                 memberParamList.add(new MapSqlParameterSource()
-                        .addValue("memberId", UuidUtil.toBytes(UUID.randomUUID()), Types.BINARY)
+                        .addValue("memberId", UuidUtil.toBytes(UuidUtil.generateUuid()))
                         .addValue("age", memberDto.age())
                         .addValue("name", memberDto.name())
                         .addValue("teamId", teamId)
