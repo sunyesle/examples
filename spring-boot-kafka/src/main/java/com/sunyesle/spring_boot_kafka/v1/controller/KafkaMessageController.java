@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
-@Profile({"kafka-single-broker", "kafka-multi-broker"})
+@Profile({"kafka-single-broker", "kafka-multi-broker", "kafka-manual-commit"})
 @RestController
 @RequestMapping("/api/messages")
 @RequiredArgsConstructor
