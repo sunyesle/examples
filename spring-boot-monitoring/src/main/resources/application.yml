@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 10 # 톰캣 스레드 수 10개
+
+spring:
+  application:
+    name: spring-boot-monitoring
+datasource:
+  url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+  driver-class-name: org.h2.Driver
+  username: sa
+  password:
+  hikari:
+    maximum-pool-size: 3 # HikariCP 커넥션 수 3개
+    connection-timeout: 3000 # 커넥션 대기 시간 3초
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
