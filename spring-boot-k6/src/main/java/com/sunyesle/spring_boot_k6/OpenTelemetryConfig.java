@@ -1,4 +1,4 @@
-package com.sunyesle.spring_boot_monitoring;
+package com.sunyesle.spring_boot_k6;
 
 import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics;
