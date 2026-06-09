@@ -3,6 +3,7 @@ server:
   tomcat:
     threads:
       max: 10 # 톰캣 스레드 수 10개
+      accept-count: 20 # 요청 대기 큐 크기 20개
 
 spring:
   application:
