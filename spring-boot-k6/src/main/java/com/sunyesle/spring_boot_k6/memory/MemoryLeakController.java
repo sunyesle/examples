@@ -19,4 +19,11 @@ public class MemoryLeakController {
         leakList.add(new DummyObject());
         return "Total items: " + leakList.size();
     }
+
+    // 메모리를 비움
+    @GetMapping("/reset")
+    public String resetMemory() {
+        leakList.clear();
+        return "Memory cleared!";
+    }
 }
