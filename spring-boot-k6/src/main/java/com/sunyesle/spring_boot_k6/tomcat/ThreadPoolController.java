@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tomcat")
 public class ThreadPoolController {
 
-    // 톰캣 스레드를 3초 동안 붙잡고 있는 API
+    // 톰캣 스레드를 5초 동안 붙잡고 있는 API
     @GetMapping("/heavy")
     public String heavyRequest() {
         log.info("Heavy request started: {}", Thread.currentThread().getName());
