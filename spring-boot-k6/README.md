@@ -1,5 +1,4 @@
 # k6 성능 테스트 (부하 테스트)
-
 k6는 Grafana Labs에서 만든 오픈소스 성능 테스트 도구로, JavaScript 기반으로 테스트 시나리오를 작성하여 여러 사용자의 동시 요청을 시뮬레이션 할 수 있다.
 
 ## 설치
@@ -28,5 +27,30 @@ http://localhost:3000/d/demo-uid/k6-opentelemetry-prometheus
 K6_OTEL_GRPC_EXPORTER_ENDPOINT=localhost:4317 \
 K6_OTEL_GRPC_EXPORTER_INSECURE=true \
 K6_OTEL_METRIC_PREFIX=k6_ \
-k6 run --tag testid=1 -o experimental-opentelemetry k6/script.js
+k6 run --tag testid=0 -o experimental-opentelemetry k6/script.js
+```
+
+## 1. 메모리 누수
+```bash
+./run_test.sh memory-leak-test.js 1
+```
+
+## 2. 톰캣 스레드 풀 고갈
+```bash
+./run_test.sh tomcat-thread-test.js 2
+```
+
+## 3. DB 커넥션 풀 고갈
+```bash
+./run_test.sh db-connection-test.js 3
+```
+
+## 4. CPU 과부하
+```bash
+./run_test.sh cpu-contention-test.js 4
+```
+
+## 5. 데드락
+```bash
+./run_test.sh deadlock-test.js 5
 ```
