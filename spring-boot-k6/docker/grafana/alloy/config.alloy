@@ -1,19 +1,22 @@
-// expose OTEL receivers
 // https://grafana.com/docs/alloy/latest/reference/components/otelcol.receiver.otlp/
+
+// 외부 OTel 메트릭 수신 설정
 otelcol.receiver.otlp "default" {
-	// configures the default gRPC receiver endpoint "0.0.0.0:4317"
+	// 기본 gRPC 수신 엔드포인트인 "0.0.0.0:4317" 포트를 활성화한다.
 	// https://grafana.com/docs/alloy/latest/reference/components/otelcol.receiver.otlp/#grpc-block
 	grpc {}
 
-	// configures the default HTTP receiver endpoint "0.0.0.0:4318"
+	// 기본 HTTP 수신 엔드포인트인 "0.0.0.0:4318" 포트를 활성화한다.
 	// https://grafana.com/docs/alloy/latest/reference/components/otelcol.receiver.otlp/#http-block
 	http {}
 
+    // 수신한 메트릭 데이터를 배치 컴포넌트로 전달한다.
 	output {
 		metrics = [otelcol.processor.batch.default.input]
 	}
 }
 
+// 배치 처리 후 프로메테우스 exporter 컴포넌트로 전달한다.
 otelcol.processor.batch "default" {
 	// https://grafana.com/docs/alloy/latest/reference/components/otelcol.processor.batch/
 	output {
@@ -21,19 +24,20 @@ otelcol.processor.batch "default" {
 	}
 }
 
+// OTel 메트릭 데이터를 프로메테우스 포맷으로 변환하여 프로메테우스 remote_write 컴포넌트로 전달한다.
 otelcol.exporter.prometheus "default" {
 	add_metric_suffixes = false
 	forward_to          = [prometheus.remote_write.default.receiver]
 }
 
-// Collect metrics from the local running Alloy instance and forward to
-// Prometheus.
+// 현재 실행 중인 Alloy 인스턴스의 메트릭을 수집하고 프로메테우스 remote_write 컴포넌트로 전달한다.
 prometheus.exporter.self "alloy" {}
 prometheus.scrape "alloy" {
 	targets    = prometheus.exporter.self.alloy.targets
 	forward_to = [prometheus.remote_write.default.receiver]
 }
 
+// 메트릭 데이터를 프로메테우스 서버의 Remote Write API로 전송한다.
 prometheus.remote_write "default" {
 	endpoint {
 		url = format(
